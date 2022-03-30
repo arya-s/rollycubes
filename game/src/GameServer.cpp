@@ -363,16 +363,18 @@ int main(int argc, char **argv) {
         std::cout << e.what() << std::endl;
     }
 
-    std::string devEnv(std::getenv("DEV"));
     std::string authServerUrl("http://auth:3031/");
     std::string devAuthServerUrl("http://localhost:3031/");
 
     std::string baseAuthUrl;
-    if (!devEnv.size()) {
+
+    if (std::getenv("DEV")) {
         baseAuthUrl = authServerUrl;
     } else {
         baseAuthUrl = devAuthServerUrl;
     }
+
+    std::cout << "Selected auth server URL: " << baseAuthUrl << std::endl;
 
     JWTVerifier jwt_verifier;
     jwt_verifier.init(baseAuthUrl);
